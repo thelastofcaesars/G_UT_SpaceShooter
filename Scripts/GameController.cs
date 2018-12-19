@@ -14,50 +14,53 @@ public class GameController : MonoBehaviour
     public float waveWait;
 
     public Text scoreText;
-    public Text restartText;
+    //public Text restartText;
     public Text gameOverText;
-    public GameObject quitButton;
+    public GameObject restartButton;
+    //public GameObject quitButton;
 
     private bool gameOver;
     private bool restart;
     private int score;
-    private bool escaped;
+    //private bool escaped;
 
     void Start()
     {
         gameOver = false;
         restart = false;
-        restartText.text = "";
+        //restartText.text = "";
+        restartButton.SetActive(false);
         gameOverText.text = "";
         score = 0;
         UpdateScore();
         StartCoroutine(SpawnWaves());
     }
-    private void Update()
-    {
-        if(restart)
+    /*    private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.R))
+            if(restart)
             {
-                SceneManager.LoadScene("Main");
+                if(Input.GetKeyDown(KeyCode.R))
+                {
+                    SceneManager.LoadScene("Main");
+                }
+            }
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                if(escaped)
+                {
+                    quitButton.SetActive(false);
+                    Time.timeScale = 1;
+                    escaped = false;
+                }
+                else
+                {
+                    quitButton.SetActive(true);
+                    Time.timeScale = 0;
+                    escaped = true;
+                }
             }
         }
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            if(escaped)
-            {
-                quitButton.SetActive(false);
-                Time.timeScale = 1;
-                escaped = false;
-            }
-            else
-            {
-                quitButton.SetActive(true);
-                Time.timeScale = 0;
-                escaped = true;
-            }
-        }
-    }
+    */
     IEnumerator SpawnWaves()
     {
         yield return new WaitForSeconds(startWait);
@@ -74,7 +77,8 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(waveWait);
             if (gameOver)
             {
-                restartText.text = "Press 'R' for Restart";
+                restartButton.SetActive(true);
+                //restartText.text = "Press 'R' for Restart";
                 restart = true;
                 break;
             }
@@ -94,8 +98,12 @@ public class GameController : MonoBehaviour
         gameOverText.text = "Game Over!";
         gameOver = true;
     }
-    public void QuitGame()
+    //public void QuitGame()
+    //{
+    //    Application.Quit();   
+    //}
+    public void RestartGame()
     {
-        Application.Quit();   
+        SceneManager.LoadScene("Main");
     }
 }
